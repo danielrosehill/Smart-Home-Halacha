@@ -36,6 +36,56 @@ This is a representative example of affordable presence sensors commonly availab
 
 *Full specifications: [sensors/presence/spec.txt](../sensors/presence/spec.txt)*
 
+### Zigbee2MQTT Configuration Options
+
+The Z2M interface exposes several configurable parameters that are relevant to the halachic analysis:
+
+**Sensor-Specific Settings (Exposes tab)**:
+- **Presence**: Boolean (true/false) — the core state that changes when someone is detected
+- **Motion state**: Categorical values including "large", "small", "none" — provides granularity on movement type
+- **Fading time** (Presence keep time): 0-28800 seconds — how long presence remains "true" after last detection
+- **Static detection distance**: 0-6 meters — range for mmWave radar
+- **Static detection sensitivity**: 0-10x — threshold for radar detection
+- **Motion detection sensitivity**: 0-10x — threshold for PIR detection
+- **Indicator**: ON/OFF toggle — controls the LED indicator light
+- **Motion detection mode**: `only_pir`, `pir_and_radar`, `only_radar` — selects which detection systems are active
+
+**Z2M General Settings**:
+- **disabled**: "Disables the device (excludes device from network scans, availability and group state updates)" — this is a Z2M-level setting, NOT a sensor disable
+- **debounce**: Debounces messages from the device — can reduce transmission frequency
+- **filtered_attributes**: Filter attributes with regex from published payload — could potentially suppress presence state from being published
+
+**State Payload (what gets transmitted)**:
+```json
+{
+  "battery": 100,
+  "illuminance": 1528,
+  "indicator": "OFF",
+  "linkquality": 94,
+  "motion_detection_mode": "only_pir",
+  "motion_state": "small",
+  "presence": true,
+  "fading_time": null,
+  "motion_detection_sensitivity": null,
+  "static_detection_distance": null,
+  "static_detection_sensitivity": null
+}
+```
+
+**Halachically Relevant Observations**:
+
+1. **No true "disable" option**: The motion detection mode allows switching between `only_pir`, `pir_and_radar`, or `only_radar` — but there's no option to disable detection entirely. The sensor will always detect.
+
+2. **Potential workaround via sensitivity**: As noted in the screenshots, one could potentially set motion detection thresholds to values that would never be met in practice (e.g., sensitivity to 0, distance to 0) as a proxy for disabling. This could be automated before/after Shabbat.
+
+3. **LED indicator can be disabled**: The `indicator` toggle can turn off the LED, eliminating visible feedback of state changes.
+
+4. **Z2M "disabled" setting**: This only excludes the device from Z2M's processing — it does NOT stop the sensor from detecting or transmitting. The sensor continues to operate; Z2M just ignores it.
+
+5. **filtered_attributes could suppress logging**: Using regex filters, one could potentially prevent the `presence` attribute from being published to MQTT/Home Assistant — though the sensor would still detect and transmit internally.
+
+*Z2M screenshots: [sensors/presence/z2m/](../sensors/presence/z2m/)*
+
 ## The Use Case
 
 **Weekday automation example:**

@@ -49,6 +49,58 @@ Door/window sensors are mechanically simpler than presence sensors:
 
 **Halachic implication**: The simpler mechanism of door sensors may be relevant. Opening a door causes a magnetic reed switch to change state — this is more mechanically direct than the multi-stage PIR→mmWave activation in presence sensors. However, both still result in Zigbee transmission and logging.
 
+### Zigbee2MQTT Configuration Options
+
+The Z2M interface for door/window sensors is notably simpler than presence sensors:
+
+**Sensor Exposes (what the device reports)**:
+- **Contact**: Boolean (true = closed, false = open) — the core state
+- **Battery**: Percentage (can take up to 24 hours to update)
+- **Voltage**: Battery voltage in millivolts (e.g., 2600 mV)
+- **Tamper**: Boolean — indicates if device has been physically tampered with
+- **Linkquality**: Signal strength (LQI value)
+
+**State Payload (what gets transmitted)**:
+```json
+{
+  "battery": 93,
+  "battery_low": false,
+  "contact": true,
+  "linkquality": 131,
+  "tamper": false,
+  "voltage": 2600
+}
+```
+
+**Z2M General Settings** (same as presence sensor):
+- **disabled**: Excludes device from Z2M processing (sensor still operates)
+- **debounce**: Rate-limits message processing
+- **filtered_attributes**: Can suppress specific attributes from MQTT publishing
+
+**Settings (specific) tab**: Empty — no device-specific configurable parameters exposed
+
+**Key Differences from Presence Sensors**:
+
+1. **No configurable detection parameters**: Unlike the presence sensor with its sensitivity sliders and detection modes, the door sensor has no user-adjustable settings. It simply reports open/closed.
+
+2. **No way to reduce sensitivity**: You cannot configure the reed switch to be "less sensitive" — magnets either separate or they don't.
+
+3. **Tamper detection**: The sensor includes tamper detection, which means physically covering/blocking it would trigger a different state change.
+
+4. **Simpler payload**: Fewer attributes transmitted per state change.
+
+**Halachically Relevant Observations**:
+
+1. **No "Shabbat mode" possible at sensor level**: Unlike presence sensors where you might hack sensitivity settings, door sensors offer no configuration that could prevent detection.
+
+2. **Z2M filtering is the only software option**: Using `filtered_attributes` to suppress `contact` from being published would prevent Home Assistant from seeing state changes — but the sensor still detects and transmits via Zigbee.
+
+3. **Physical workaround possible but impractical**: Taping a small magnet to the door frame side could keep the reed switch "closed" regardless of door position — but this defeats the purpose entirely and is impractical for daily use.
+
+4. **Tamper creates additional concern**: If someone tries to physically disable/cover the sensor, the tamper state would change — creating another human-triggered state change.
+
+*Z2M screenshots: [sensors/door/z2m/](../sensors/door/z2m/)*
+
 ## The Use Case
 
 **DIY Alarm System (especially for renters):**
