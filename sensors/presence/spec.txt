@@ -1,0 +1,57 @@
+24G MmWave Radar Human Presence Sensor+PIR Motion Sensor Light Temperature Humidity USB/Battery Powered Support Tuya Zigbee Z2M
+
+
+
+1. Zigbee devices must be connected to a Zigbee gateway in order to function.
+
+2. The maximum static detection distance of is 3.5 meters, and the maximum distance of PIR motion detection is 5 meters. The sensitivity of static detection is adjustable, while the sensitivity of PIR detection is fixed and cannot be adjusted.
+
+3. After installation, the sensing surface needs to be aligned with the area that needs to be inspected.
+
+4. When there are frequent false negatives (someone showing no one) In the situation , the "Presence Keep Time" can be set to 60 seconds or above, set the 'Static detection sensitivity' to 8x.
+
+5. The device collects light values every 1 minute, and if there is a change in the light value, It will automatically upload light data.
+
+6. As it is a low-power device, after setting parameters, it needs to be triggered once or updated only when the device uploads data.
+
+7. When the current status is' no one, the sensor detects' Presence' It is detected through PIR, and only when PIR detects someone, will it Activate millimeter wave radar for static detection.
+
+8. Temperature/humidity data is collected every 15 seconds, and if there is a temperature difference Data will only be reported if there is a difference of 0.3 °C or 3% in humidity.
+
+
+
+Specification
+
+Type A: 24G Radar Presence Sensor+PIR Infrared Sensor+Luminance Sensor+Temperature Sensor+Humidity Sensor
+
+Type B: 24G Radar Presence Sensor+PIR Infrared Sensor+Luminance Sensor
+
+Working Voltage: DC3V
+
+Power Adapter: USB DC 5V
+
+Quiescent Current: <65uA
+
+Wireless Protocol: Zigbee 3.0(need tuya zigbee gateway)
+
+App: Smart Life / Tuya
+
+Illuminance Range: 0~3500Lux
+
+Battery Type: 2pcs LR03 AAA(not included)
+
+Working Temperature: -10°C~55’℃
+
+Working Humidity: max95%RH
+
+
+
+Package Content
+
+1* 24G Human Presence sensor
+1* Double-sided tape
+
+1* User manual
+
+1* Bracket(for choose)
+
