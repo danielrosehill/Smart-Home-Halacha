@@ -1,0 +1,144 @@
+Okay, today is the 3rd of December 2025, the 14th day of Kislev, and I say the Hebrew date because
+I have my delightful, of all the little sulfur projects I've viped coated over the course at 2025,
+which there have been many. I actually feel the most proud about my Hebrew date widget for KDE plasma
+on Ubuntu. I was actually really surprised to see that no one had made one before. I was looking
+at the widgets, and I saw there was an Islamic calendar, there was an Apali calendar, which I didn't
+even know existed, and I was like, surely there's one for the Hebrew calendar, and to my surprise,
+there wasn't. So I said, aha, plot the man who can do everything, or the boss who can do everything.
+Let's try make a KDE plasma widget, and it worked. I love it. It's brilliant. It's using the
+Heepkal API for the Hebrew date, and it requires your location to get course geolocation,
+and you can put your precise geolocation, but generally the city is sufficient for the purpose
+of his man name, Jewish calendar dates, because unless it's a very big urban area, it doesn't tend.
+Well, 32nd difference, maybe. Anyway, that's for the user to decide which level of
+precision that they are happy with. What I created this repository today for was to just gather
+together some notes for Jewish observance and smart home. I've already created and shared a few
+templates for home automation on GitHub and on blogs. One of them was there is a couple of Jewish
+integrations for home assistant. One provides the, I think it's called Shabbat, and holidays Jewish
+integration, and that provides his man name, and a binary sensor for Yom Tov and one for, sorry,
+yeah, one for Haag and one for Shabbat. My little innovation, I think, was the first thing I
+created successfully in home assistant was a downstream sensor, because for my automations,
+and I think for a lot of folks, it's an either or as in, I have a program that occurs whether it
+is Shabbat or a Yom Tov and not either or. So it's just a little, you can also automate that by
+having two trigger conditions, which by home assistant are automatically interpreted as either or,
+if I recall, but it just allowed me to create a single sensor and use that for lights and whatnot.
+So that's what I'm sure before, and what I wanted to create this one for was just jotting down some
+notes from myself, which are not from a, I'm not needless to say, a rabbi, anything close to a rabbi,
+but I am very interested in this area, and I believe there's a huge amount that smart home
+technology has to offer for the religiously observant population. It can do so much, take the
+place of those kind of clunky old manual switches, and even those home assistant is a bit of work
+to set up. If you look at like the Zmanim sensor, for example, works, the Shabbat times work so
+well, and even with, if you buy like a two-year light of the shelf and you have, there is a timer,
+but you're not going to update that timer on every device you own every single week manually to
+align with Shabbat times. So, home assistant really takes that flexibility, just brings it,
+brings it into the system. So it's really terrific, and we've been using it at home for,
+we've had a Shabbat automation, based on the Hebrew calendar sensor and based on actually my
+upstream sensor from that, and it pretty reliably works when I've kind of done a few
+permutations like before Shabbat, 30 minutes before Shabbat, there's an announcement on the speaker,
+lighting sets, midnight, there's a bedtime automation, 9 in the morning, to give us a bit of a lie,
+and there's a morning automation, even afternoon automation, and these automations are just
+turning on and off lights and ACs, so like the midnight one turns off the air conditioner in the living room,
+morning one turns it back on, etc, etc, and it just works, and that really is the kind of
+goal is really a set it and forget it system, which is what the Shabbat time sensor allows,
+because you don't have to do anything, you don't never need to update Shabbat times,
+they're coming from the integration, and the automations are baked around at Shabbat time,
+so it really, really does work very well. So what I wanted to do in this repository specifically,
+why I'm recording these notes is just to talk about a couple of hallochic issues that I want to
+look into, and again, emphasizing that this I'm not doing so, as like this is what I figured out,
+it's more, these are just kind of my open source notes on the topic. The reason I actually set it
+up today was a specific, I've just set up a few human presence sensors in the house,
+these are for anyone who's not familiar with this exact type of sensor, it's a little miniature radar
+essentially, which makes it sound way more sophisticated than it is, and detects movement, and based
+on that it's a binary sensor, true false, for whether movement is being detected, and there's a
+sensitivity threshold to it, and kind of a cool off time, so it doesn't over trigger, under trigger.
+I wanted to get one of these because I keep leaving lights off, lights on in the living room,
+so I set up an automation, it actually worked beautifully, fantastically, between midnight and ADM,
+the automation runs, and it says if there's no motion, turn off the lights, so if I'm not in the room,
+there's no motion, the lights go off, and that already saves us, sorts out the kind of
+Daniel left on the living room lights issue, and turns off the electricity, and cuts down on our
+electricity wastage, which cuts down on our power bill, and on our unnecessary use of power,
+terms environment, and then on the flip side there's a reverse condition, which is between
+midnight and ADM, if motion is detected, it means Daniel is farging, is on a midnight snack hunt,
+and we're going to turn on just a very low light, so that he won't be woken up during his act of
+scavenging the fridge for food, and then when I go back to bed after having scavenged,
+the off light, the off condition will still be in effect, and it'll turn the lights off,
+and this is, I feel like, you know, oh my gosh, it works so well, so the challenge here is on
+Shabbat, these sensors, that they're sensing motion, and then by you, by any human who moves,
+you're triggering the sensors, so my presumption would be that that is not, that is a problem on Shabbat,
+and my notes are not so much to explore that, whether that's a problem as to think about some ways
+that in Home Assistant, it probably will come down to just me providing a code sample,
+for a way to have the automation running every day, actually I've already, it's already come to mind,
+I could just add an auth condition to the automations, but that actually is a lucky question,
+here's my lucky question, so I can sort out that, I can sort out the automation, the light's turning
+on and off by the following, the automation that turns the lights off and on, I can add a
+condition that says Shabbat is false, that means if Shabbat is true, the automation won't take
+effect, so the user me will come into the room at 1am on Saturday morning, and no actions will be
+taken by the automation because the condition Shabbat is true was not met, therefore the automation
+does not continue, that's how an automation works, and I'm kind of trying to just explain the
+technical stuff, because I'm thinking about a specific friend, I'd like to send this to
+who is Arabi, and might have some thoughts, because this is I think a really interesting area of
+how I can apply to modern technologies, so I have a fix, I have a pretty easy fix at the
+technical level for the lights turning on issue, but what I don't have a fix for is the following,
+even if the light doesn't turn on, nevertheless the sensor, the human present sensor is internally
+registering motion, it's going from false to true, the only way to disable that is to take the
+batteries out, and needless to say it's not practical that before Shabbat, one is going to go
+around the house, pulling out batteries from every, you might have five, I think I ordered four of them,
+and then putting the back in after Shabbat, so that's not a viable solution, so my question really
+is notes to self, I might find that someone has engineered a very specific sensor for the needs
+of the Jewish religious population, even a present sensor, and it happens to integrate with
+home assistant and Zigbee, but I think pigs will be flying over Jerusalem before such a product
+exists, I very much doubt it does, so hopefully I don't, I don't wish the conclusion that all my
+sensors are problematic, that sensor type one, sensor type two, you could almost say this is a
+luxury sensor, I don't really need the human present sensor, it's just something I bought because I
+said, well you know this is what happens is people like me go from functioning members of
+society, well adjusted members of society who go out to meet their friends and bars to
+hermits, automating their home is you get sucked in, sensor by sensor to home assistant,
+so it's not a, it's not something I need, I just thought well I have this system, that's why
+don't I add that, it's where it was actually really for, for our newborn, sorry, a tangent,
+a newborn, just when we're bringing him into change him in the middle of the night, I thought
+sometimes I don't, I can't hit the light sensor, and I thought let's put it, anyway, that's why I
+really, really put it on, sensor two for a lactic discussion and debate and consideration is a
+security sensor, now my wife and I are renters, and we trust that those listening will not
+abuse the open sourcing of this information to attempt to rob us, I'm joking, this is my
+drill sensor humor combined with me being very groggy when I recorded this at an early hour
+the morning and being, I'm waking up as I speak into this microphone,
+we rent and we, as renters we don't have like a proper alarm system, but what I did is set up a
+Zigbee-based system, now this is actually, this is a real, this is a more serious,
+a lucky question because I don't would never want to be without any kind of alarm system at home,
+and if I can't put one in as a renter, I'm going to figure out a way to get some kind of alarming
+through my own needs, for people who take the DIY approach to alarming, so professionally installed
+alarm systems, if I recall correctly and from the very authoritative source of information on
+this, like oceans 11, the movie, frequently are laser-based, so you'll have a laser pointing
+across a potential entry surface, and if something, if you move, you're going to interrupt the laser
+beam and that's going to trigger the alarm, now unfortunately for those of us who are hacking our
+way to some kind of home alarm system, I haven't seen any DIY laser-based system that works for
+a home assistant, probably is, as I say that, but what there is is a more primitive device, which is a
+door window sensor, a door window sensor, which I have about 10 at home,
+operates by the following mechanism, you have a magnet, you've got two little vertical devices,
+about the size of, about four or five centimeters, each, just a little, envision them as a coin,
+like a 50 cent coin, or a five-shackle coin if you're listening in Israel, and when a door opens,
+the two pull apart, because one is fixed to the outer surface of the door, the door frame,
+one is fixed to the door, or the window, and that is the trigger condition,
+so when the magnets are together, it's false, when the magnets are not together,
+physically, when the magnetism is lost, that turns to a true condition, which means in human terms,
+the door is open, you don't know by how much, by what extent the door is open, you don't know,
+you don't have a video feed of the door, you just know that this is how these sensors work,
+they're low power, they can run on battery for a year, they're brilliant, but they keep their
+information very light, so it's a true condition or a false condition, binary sensor,
+so we have these, now the problem is, for, this is how they work for alarming, you can say,
+overnight, if any of the door sensors turn to true, probably means our house has been broken into,
+trigger the alarm, simplified example, now the issue is, that again, on Shabbat, let's say I
+disable the a sensor for Shabbat evening, because I don't want to have guests who leave the house
+when I am in the morning, and they're going to trigger the alarm, okay, I can do that, I can edit
+my sensors for Shabbat, or I can, or I can have, I can not have the alarm system armed,
+the problem is just as with the human present sensors, even though the system is not armed,
+those sensors are still, every time the door opens, momentarily, a little light comes on, it says,
+true, and it goes off, so inadvertently you or your Shabbat keeping guests would be triggering the
+condition, and again, just like in the previous case, it's really not feasible to pull out all the
+batteries, and I don't know if there's any other solution, but it's actually really the same,
+I think, calachic complication as with the human present sensors, in the sense that these are both
+really, really helpful during the week, and it seems to me like a terrible pity not to be able to
+certainly secure your home, if that's the only way that you are able to, and maybe that brings
+in a certain consideration, and a human presence, so that's it from my first installation,
+and I know there's a couple of organizations and institutions that are actually really involved
+in this space, some institution whose name I forget, but I'll leave it there for the moment,
+just for the, I'll just put this in the repository, and come back to exploring it at a later point in time.

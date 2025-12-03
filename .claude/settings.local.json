@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__personal__cloud-asr_gemini_transcribe"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

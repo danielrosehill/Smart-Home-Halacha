@@ -21,10 +21,21 @@ After HA:
 
 - Set up a recurring Shabbat/Chag automation. Scenes and automations turn lighting and ACs on and off befitting a recurrent pattern. 
 
-## Notes Here 
+## Current Topics
 
-I started this repository to gather together a few questions about one specific topic but am keeping it as a placeholder for future questions that may arise. 
+### Sensor State Changes on Shabbat
 
-To state the obvious:
+The primary focus currently is on sensors that register state changes even when automations are disabled:
 
-I am not a Rabbi! These are merely my own personal notes and may not be reflective of the halacha you hold by. 
+- **Human Presence Sensors**: Radar-based motion detection that registers movement internally
+- **Door/Window Security Sensors**: Magnetic contact sensors that trigger on door opening
+
+See the [notes/](notes/) directory for detailed exploration of these questions.
+
+### Existing Resources
+
+- [Combined Shabbat/Yom Tov Sensor Template](https://github.com/danielrosehill/Home-Assistant-YomTov-Shabbat-0125)
+
+## Disclaimer
+
+I am not a Rabbi! These are merely my own personal notes and may not be reflective of the halacha you hold by. Consult your posek for actual halachic guidance. 
