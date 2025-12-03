@@ -13,12 +13,41 @@ Magnetic contact sensors (also called reed switches) detect when a door or windo
 - **Size**: Small (~4-5cm each piece)
 - **Integration**: Zigbee, Z-Wave, or proprietary wireless
 
+### Reference Hardware: Aqara Door/Window Sensor MCCGQ11LM (~$10-15 USD)
+
+A representative example of a typical Zigbee contact sensor:
+
+- **Model**: MCCGQ11LM
+- **Battery**: CR1632 (included)
+- **Protocol**: Zigbee 3.0
+- **Dimensions**: 41 × 22 × 11 mm (very compact)
+- **Detection Distance**: 22mm maximum gap between sensor and magnet
+- **Operating Temperature**: -10°C to +45°C
+- **Operating Humidity**: 0-95% RH (non-condensing)
+- **Compatibility**: Apple HomeKit, Aqara Home, Mi Home, Zigbee2MQTT
+
+*Full specifications: [sensors/door/spec.txt](../sensors/door/spec.txt)*
+
 ### How They Work
 
 1. When door is closed, magnets are adjacent → sensor reports "closed" (false)
 2. When door opens, magnets separate → sensor reports "open" (true)
 3. Sensor may briefly illuminate an LED on state change
 4. State change is transmitted to hub and logged
+
+### Technical Contrast with Presence Sensors
+
+Door/window sensors are mechanically simpler than presence sensors:
+
+| Aspect | Door/Window Sensor | Presence Sensor |
+|--------|-------------------|-----------------|
+| Detection mechanism | Reed switch (magnetic) | PIR + mmWave radar |
+| Active circuitry | Minimal - switch completes/breaks circuit | Complex - PIR triggers radar activation |
+| Triggered by | Physical separation of components | Body heat + movement + presence |
+| Power draw change | Negligible | Significant (radar activation) |
+| Transmission | On state change only | State changes + periodic environmental data |
+
+**Halachic implication**: The simpler mechanism of door sensors may be relevant. Opening a door causes a magnetic reed switch to change state — this is more mechanically direct than the multi-stage PIR→mmWave activation in presence sensors. However, both still result in Zigbee transmission and logging.
 
 ## The Use Case
 

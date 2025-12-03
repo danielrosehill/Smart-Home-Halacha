@@ -1,0 +1,9 @@
+Specifications
+● Model: MCCGQ11LM
+● Battery: CR1632 (included)
+● Wireless Protocol: Zigbee
+● Dimensions: 41 × 22 × 11 mm (1.61 × 0.87 × 0.43 in.)
+● Maximum Detection Distance: 22 mm
+● Operating Temperature: -10℃~+45℃(14℉~113℉)
+● Operating Humidity: 0 - 95%RH, non-condensing
+● App: Apple Home app (iOS 10.3 or later), Aqara Home app (Android 5.0 or later, iOS 10.3 or later), Mi Home app
